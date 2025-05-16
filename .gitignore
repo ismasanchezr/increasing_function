@@ -1,0 +1,26 @@
+# C++ build files
+build/
+*.o
+*.so
+*.a
+*.out
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# SWIG-generated wrappers (optional, if auto-regenerable)
+find_square_wrap.cxx
+find_square.py
+
+# VS Code settings
+.vscode/
+
+# Virtual environments
+venv/
+.env/
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/

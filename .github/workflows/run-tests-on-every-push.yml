@@ -1,0 +1,45 @@
+name: Run Tests On Every Push
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  test-python:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: [2.7, '3.x']
+
+    name: Python ${{ matrix.python-version }} tests
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y swig cmake g++ make
+          python -m pip install --upgrade pip
+          python -m pip install .
+
+      - name: Build C++ module
+        run: |
+          cd python_wrapper
+          mkdir -p build
+          cd build
+          cmake ..   # Genera los Makefiles
+          make       # Compila el wrapper y el módulo Python
+
+      - name: Run Python tests
+        env:
+          PYTHONPATH: python_wrapper/build  
+        run: python python_wrapper/test_find_square.py
+
