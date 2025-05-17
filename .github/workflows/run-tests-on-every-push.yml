@@ -24,7 +24,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y swig cmake g++ make
           python -m pip install --upgrade pip
-          python -m pip install .
+          python -m pip install ./find_square_pkg
+
+      - name: Generate SWIG wrapper
+        run: |
+          swig -python -c++ -I. find_square.i
+          mv find_square_wrap.cxx python_wrapper/
+          mv find_square.py python_wrapper/ 
 
       - name: Build C++ module
         run: |

@@ -73,13 +73,17 @@ python3 -m pip install .
 
 ### Option 2 (Quick): Install to your user environment
 ## On macOS (Python 3.12+), --break-system-packages may be required due to PEP 668 protections.
+cd increasing_function
+mkdir -p find_square_pkg/find_square
+cp python_wrapper/find_square.py find_square_pkg/find_square/find_square.py
+cp python_wrapper/build/_find_square.so find_square_pkg/find_square/_find_square.so
 cd find_square_pkg
-cp find_square.py find_square_pkg/find_square.py
-cp python_wrapper/build/_find_square.so find_square_pkg/_find_square.so
 python3 -m pip install . --break-system-packages
-rm -rf build find_square find_square.egg-info
+rm -rf build find_square.egg-info
 
 ## Use the package 
 python3
 >>> import find_square
 >>> print(find_square.find_square(81.0, 0, 20))
+9
+>>>
